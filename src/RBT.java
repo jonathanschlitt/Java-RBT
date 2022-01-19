@@ -1,43 +1,57 @@
+
 class Node {
   int key;
   Node left;
   Node right;
   Node parent;
-  Node root;
-  boolean color = true;
+  int color;
 
-  public Node(int key, Node root, Node left, Node right, Node parent) {
+  public Node(int key, Object left, Object right, Object parent, int color) {
     this.key = key;
+    this.left = (Node) left;
+    this.right = (Node) right;
+    this.parent = (Node) parent;
+    this.color = color;
+  }
+
+  public Node(Node left, Node right, int color) {
     this.left = left;
     this.right = right;
-    this.parent = parent;
-    this.root = root;
+    this.color = color;
   }
 }
 
-class Tree {
+public class RBT {
   Node root;
+  Node TNULL;
 
-  public Tree(Node root) {
-    this.root = root;
+  // public RBT(Node root) {
+  // this.root = root;
+  // }
+
+  public RBT() {
+    this.TNULL = new Node(null, null, 0);
+    // this.TNULL.color = 0;
+    // this.TNULL.left = null;
+    // this.TNULL.right = null;
+    this.root = TNULL;
   }
 
-  // Node iterativeTreeSearch(Node x, int k) {
-  // while (x != null && k != x.key) {
-  // if (k < x.key) {
-  // x = x.left;
-  // } else {
-  // x = x.right;
-  // }
-  // }
-  // return x;
-  // }
+  // Node n1 = new Node(< Node Value >, null, null, null, 1);
 
-  void treeInsert(Tree t, Node z) {
+  void rbInsert(Node z) {
+
+    // Node node = new Node();
+    // node.parent = null;
+    // node.data = key;
+    z.left = this.TNULL;
+    z.right = this.TNULL;
+    // node.color = 1;
+
     Node y = null;
-    Node x = t.root;
+    Node x = this.root;
 
-    while (x != null) {
+    while (x != TNULL) {
       y = x;
       if (z.key < x.key) {
         x = x.left;
@@ -48,27 +62,81 @@ class Tree {
 
     z.parent = y;
     if (y == null) {
-      t.root = z;
+      this.root = z;
     } else if (z.key < y.key) {
       y.left = z;
     } else {
       y.right = z;
     }
+
+    if (z.parent == null) {
+      z.color = 0;
+      return;
+    }
+
+    if (z.parent.parent == null) {
+      return;
+    }
+
+    // z.left = null;
+    // z.right = null;
+
+    z.color = 1;
+    // System.out.println(z.parent.color);
+    rbInsertFixup(z);
   }
-}
 
-public class RBT {
-  private Node root;
+  void rbInsertFixup(Node z) {
+    Node y;
+    while (z.parent.color == 1) {
+      if (z.parent == z.parent.parent.left) {
+        y = z.parent.parent.right;
 
-  public RBT(Node root) {
-    this.root = root;
+        if (y.color == 1) {
+          z.parent.parent.color = 0;
+          y.color = 1;
+          z.parent.parent.color = 1;
+          z = z.parent.parent;
+        } else if (z == z.parent.right) {
+          z = z.parent;
+          leftRotate(z);
+        } else {
+          z.parent.color = 0;
+          z.parent.parent.color = 1;
+          rightRotate(z.parent.parent);
+        }
+
+      } else {
+        y = z.parent.parent.left;
+
+        if (y.color == 1) {
+          z.parent.color = 0;
+          y.color = 0;
+          z.parent.parent.color = 1;
+          z = z.parent.parent;
+        } else if (z == z.parent.left) {
+          z = z.parent;
+          rightRotate(z);
+        } else {
+          z.parent.color = 0;
+          z.parent.parent.color = 1;
+          leftRotate(z.parent.parent);
+        }
+      }
+
+      if (z == this.root) {
+        break;
+      }
+    }
+
+    this.root.color = 0;
   }
 
-  public void leftRotate(RBT t, Node x) {
+  public void leftRotate(Node x) {
     Node y = x.right;
     x.right = y.left;
 
-    if (y.left != null) {
+    if (y.left != this.TNULL) {
       y.left.parent = x;
     }
     y.parent = x.parent;
@@ -84,10 +152,10 @@ public class RBT {
     x.parent = y;
   }
 
-  public void rightRotate(RBT t, Node x) {
+  public void rightRotate(Node x) {
     Node y = x.left;
     x.left = y.right;
-    if (y.right != null) {
+    if (y.right != this.TNULL) {
       y.right.parent = x;
     }
     y.parent = x.parent;
@@ -100,60 +168,5 @@ public class RBT {
     }
     y.right = x;
     x.parent = y;
-  }
-
-  void rbInsert(RBT t, Node z) {
-    Node y = null;
-    Node x = t.root;
-
-    while (x != null) {
-      y = x;
-      if (z.key < x.key) {
-        x = x.left;
-      } else {
-        x = x.right;
-      }
-    }
-
-    z.parent = y;
-    if (y == null) {
-      t.root = z;
-    } else if (z.key < y.key) {
-      y.left = z;
-    } else {
-      y.right = z;
-    }
-
-    z.left = null;
-    z.right = null;
-
-    z.color = true;
-    rbInsertFixup(t, z);
-  }
-
-  void rbInsertFixup(RBT t, Node z) {
-    while (z.parent.color == true) {
-      if (z.parent == z.parent.parent.left) {
-        Node y = z.parent.parent.right;
-
-        if (y.color == true) {
-          z.parent.parent.color = false;
-          y.color = false;
-          z.parent.parent.color = true;
-          z = z.parent.parent;
-        } else if (z == z.parent.right) {
-          z = z.parent;
-          leftRotate(t, z);
-        }
-        z.parent.color = false;
-        z.parent.parent.color = true;
-
-      } else {
-        z = z.parent;
-        rightRotate(t, z);
-      }
-    }
-
-    t.root.color = false;
   }
 }
