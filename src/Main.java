@@ -3,7 +3,7 @@
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
+// import java.util.Random;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -25,17 +25,17 @@ public class Main {
             Node n = new Node(arr[i], null, null, null, 1);
             nodes.add(n);
             rbt.rbInsert(n);
+
+            generateOutput(nodes, TNULL, i);
         }
 
         // System.out.println(nodes.toString());
-
-        generateOutput(nodes, TNULL);
 
         // randomize(0);
 
     }
 
-    public static void generateOutput(ArrayList<Node> nodes, Node TNULL) {
+    public static void generateOutput(ArrayList<Node> nodes, Node TNULL, int step) {
         String begin = "digraph G {" + "\n" +
                 "graph [ratio=.48; ordering=\"out\"];" + "\n" +
                 "node [style=filled, color=black, shape=circle, width=.6" + "\n" +
@@ -68,7 +68,9 @@ public class Main {
 
         }
 
-        red += red.substring(0, red.length() - 2) + " " + redStyling;
+        if (red.length() > 3) {
+            red += red.substring(0, red.length() - 2) + " " + redStyling;
+        }
 
         // System.out.println(red);
 
@@ -89,7 +91,7 @@ public class Main {
         // generating leafes for output
         String leafes = "";
 
-        System.out.println("Counter: " + count);
+        // System.out.println("Counter: " + count);
 
         for (int i = 1; i <= count; i++) {
             if (i == count) {
@@ -105,12 +107,19 @@ public class Main {
 
         String relations = generateRelations(nodes, TNULL);
 
-        String result = "\n\n" + begin + "\n\n" + red + "\n" + leafes + "\n\n" + relations + "\n" + end + "\n";
+        String resultForConsole = "\n\n" + begin + "\n\n" + red + "\n" + leafes + "\n\n" + relations + "\n" + end
+                + "\n";
 
-        System.out.println(result);
+        String resultForFile = begin + "\n" + red + "\n" + leafes + "\n\n" + relations + "\n" + end;
 
-        try (PrintWriter out = new PrintWriter("filename.txt")) {
-            out.println(result);
+        // displaying output on the console
+
+        System.out.println(resultForConsole);
+
+        // Writing results into dotfiles
+
+        try (PrintWriter out = new PrintWriter("rbt_step_" + (step + 1) + ".dot")) {
+            out.println(resultForFile);
         } catch (Exception e) {
             System.out.println("Error writing file!");
         }

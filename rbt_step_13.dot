@@ -1,0 +1,27 @@
+digraph G {
+graph [ratio=.48; ordering="out"];
+node [style=filled, color=black, shape=circle, width=.6
+fontname=Helvetica, fontweight=bold, fontcolor=white,
+fontsize=24, fixedsize=true];
+
+36, 4, 96, 100, 67, 36, 4, 96, 100, 67 [fillcolor=red];
+n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14
+ [label="NIL", shape=record, width=.4,height=.25, fontsize=16];
+
+22 -> 5, 73;
+1 -> 4;
+1 -> n1;
+5 -> 1, 9;
+9 -> n2, n3;
+36 -> n4, n5;
+4 -> n6, n7;
+88 -> n8, n9;
+73 -> 49, 96;
+99 -> 100;
+99 -> n10;
+96 -> 88, 99;
+100 -> n11, n12;
+49 -> 36, 67;
+67 -> n13, n14;
+
+}

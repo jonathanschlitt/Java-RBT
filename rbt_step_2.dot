@@ -1,0 +1,15 @@
+digraph G {
+graph [ratio=.48; ordering="out"];
+node [style=filled, color=black, shape=circle, width=.6
+fontname=Helvetica, fontweight=bold, fontcolor=white,
+fontsize=24, fixedsize=true];
+
+1, 
+n1, n2, n3
+ [label="NIL", shape=record, width=.4,height=.25, fontsize=16];
+
+22 -> 1;
+22 -> n1;
+1 -> n2, n3;
+
+}
