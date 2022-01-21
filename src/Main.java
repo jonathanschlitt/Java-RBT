@@ -117,11 +117,18 @@ public class Main {
         System.out.println(resultForConsole);
 
         // Writing results into dotfiles
-
-        try (PrintWriter out = new PrintWriter("rbt_step_" + (step + 1) + ".dot")) {
-            out.println(resultForFile);
-        } catch (Exception e) {
-            System.out.println("Error writing file!");
+        if (step < 9) {
+            try (PrintWriter out = new PrintWriter("rbt_step_0" + (step + 1) + ".dot")) {
+                out.println(resultForFile);
+            } catch (Exception e) {
+                System.out.println("Error writing file!");
+            }
+        } else {
+            try (PrintWriter out = new PrintWriter("rbt_step_" + (step + 1) + ".dot")) {
+                out.println(resultForFile);
+            } catch (Exception e) {
+                System.out.println("Error writing file!");
+            }
         }
 
     }
