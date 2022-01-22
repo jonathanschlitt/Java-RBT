@@ -93,14 +93,15 @@ public class RBT {
         y = z.parent.parent.right;
 
         if (y.color == 1) {
-          z.parent.parent.color = 0;
-          y.color = 1;
+          y.color = 0;
+          z.parent.color = 0;
           z.parent.parent.color = 1;
           z = z.parent.parent;
-        } else if (z == z.parent.right) {
-          z = z.parent;
-          leftRotate(z);
         } else {
+          if (z == z.parent.right) {
+            z = z.parent;
+            leftRotate(z);
+          }
           z.parent.color = 0;
           z.parent.parent.color = 1;
           rightRotate(z.parent.parent);
@@ -110,14 +111,15 @@ public class RBT {
         y = z.parent.parent.left;
 
         if (y.color == 1) {
-          z.parent.color = 0;
           y.color = 0;
+          z.parent.color = 0;
           z.parent.parent.color = 1;
           z = z.parent.parent;
-        } else if (z == z.parent.left) {
-          z = z.parent;
-          rightRotate(z);
         } else {
+          if (z == z.parent.left) {
+            z = z.parent;
+            rightRotate(z);
+          }
           z.parent.color = 0;
           z.parent.parent.color = 1;
           leftRotate(z.parent.parent);
@@ -148,6 +150,7 @@ public class RBT {
     } else {
       x.parent.right = y;
     }
+
     y.left = x;
     x.parent = y;
   }
@@ -155,10 +158,12 @@ public class RBT {
   public void rightRotate(Node x) {
     Node y = x.left;
     x.left = y.right;
+
     if (y.right != this.TNULL) {
       y.right.parent = x;
     }
     y.parent = x.parent;
+
     if (x.parent == null) {
       this.root = y;
     } else if (x == x.parent.right) {
@@ -166,6 +171,7 @@ public class RBT {
     } else {
       x.parent.left = y;
     }
+
     y.right = x;
     x.parent = y;
   }

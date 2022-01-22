@@ -1,9 +1,8 @@
-
-// import java.util.Arrays;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-// import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -29,10 +28,6 @@ public class Main {
             generateOutput(nodes, TNULL, i);
         }
 
-        // System.out.println(nodes.toString());
-
-        // randomize(0);
-
     }
 
     public static void generateOutput(ArrayList<Node> nodes, Node TNULL, int step) {
@@ -57,7 +52,7 @@ public class Main {
             }
         }
 
-        // System.out.println(redNodes.size());
+        System.out.println(redNodes.size());
 
         // generating String for red Nodes
 
@@ -68,7 +63,7 @@ public class Main {
 
         }
 
-        if (red.length() > 3) {
+        if (red.length() > 2) {
             red += red.substring(0, red.length() - 2) + " " + redStyling;
         }
 
@@ -161,14 +156,18 @@ public class Main {
                 // System.out.println(countLeafes);
                 result += ";\n";
                 countLeafes += 2;
-            } else if (n.left == TNULL) {
-                result += n.key + " -> " + "n" + countLeafes;
-                result += ";\n";
-                countLeafes += 1;
-            } else if (n.right == TNULL) {
-                result += n.key + " -> " + "n" + countLeafes;
-                result += ";\n";
-                countLeafes += 1;
+            } else {
+                if (n.left == TNULL) {
+                    result += n.key + " -> " + "n" + countLeafes;
+                    result += ";\n";
+                    countLeafes += 1;
+                }
+
+                if (n.right == TNULL) {
+                    result += n.key + " -> " + "n" + countLeafes;
+                    result += ";\n";
+                    countLeafes += 1;
+                }
             }
 
         }
@@ -177,54 +176,12 @@ public class Main {
     }
 
     public static int[] generateRandomNumbers() {
-        // int max = 100;
-        // int min = 1;
-        // int range = max - min + 1;
-        // int rand = (int)(Math.random() * range) + min;
+        // int[] arr = { 22, 1, 5, 9, 36, 4, 88, 73, 99, 96, 100, 49, 67, 55, 17 };
 
-        int[] arr = { 22, 1, 5, 9, 36, 4, 88, 73, 99, 96, 100, 49, 67, 55, 17 };
+        int[] arr = IntStream.range(0, 15).map(i -> ThreadLocalRandom.current().nextInt(0, 100)).toArray();
 
-        // Random random = new Random();
-
-        // int[] arr = random.ints(15, 1, 100).toArray();
+        // System.out.println(Arrays.toString(arr));
 
         return arr;
     }
 }
-
-// Node n1 = new Node(100, null, null, null, null);
-
-// Node n2 = new Node(101, null, null, null, null);
-
-// Node n3 = new Node(99, null, null, null, null);
-
-// Tree t1 = new Tree(n1);
-
-// t1.treeInsert(t1, n2);
-
-// t1.treeInsert(t1, n3);
-
-// System.out.println(t1.root.left.parent.key);
-
-// Node n1 = new Node(1, null, null, null);
-
-// Node n2 = new Node(0, null, null, null);
-
-// Node n3 = new Node(3, null, null, null);
-
-// Node n4 = new Node(4, null, null, null);
-
-// Node n5 = new Node(5, null, null, null);
-
-// Node n6 = new Node(6, null, null, null);
-
-// rbt.rbInsert(n1);
-// rbt.rbInsert(n2);
-// rbt.rbInsert(n3);
-// rbt.rbInsert(n4);
-// rbt.rbInsert(n5);
-// rbt.rbInsert(n6);
-
-// System.out.println(rbt.root.key);
-// System.out.println(rbt.root.left.left.key);
-// System.out.println(rbt.root.left.parent.key);
