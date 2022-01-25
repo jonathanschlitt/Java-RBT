@@ -11,6 +11,9 @@ The output is a .dot format which can be converted to a tree representation with
 The 15 PDF files generated with Graphviz then graphically represent the entire process of inserting the nodes.
 
 The execution of the Java codes and the generation and merging of the PDF files can be started automatically by the added bash script. This only works if you are using a Linux or Mac based system and have the required software installed. The execution command of the Java code in the script is identical to the execution command of the Java extension of VS Code. 
+  
+### Example of the generated output
+<img src="https://github.com/jonathanschlitt/Java-RBT/blob/main/example_rbt_output.png">
 
 ## Folder Structure of Java Project using Visual Studio Code
 
