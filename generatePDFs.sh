@@ -16,7 +16,7 @@ rm ./pdf/*.pdf
 
 rm *.dot
 
-cd /Users/jonathanschlitt/Desktop/Testat_2/Testat2 ; /usr/bin/env /Library/Java/JavaVirtualMachines/jdk-11.0.12.jdk/Contents/Home/bin/java -cp /Users/jonathanschlitt/Desktop/Testat_2/Testat2/bin Main 
+/usr/bin/env /Library/Java/JavaVirtualMachines/jdk-11.0.12.jdk/Contents/Home/bin/java -cp /Users/jonathanschlitt/Desktop/Java-RBT/bin Main
 
 ### Generating PDFs from dot files
 for i in *.dot ;do dot -Tpdf ${i%} > ./pdf/${i%.*}.pdf $i;done

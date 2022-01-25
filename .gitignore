@@ -23,9 +23,10 @@
 hs_err_pid*
 
 # RBT OUTPUTS
-/pdf/
+# /pdf/
 /svg/
 
 *.dot
+*.pdf
 
 .DS_Store
