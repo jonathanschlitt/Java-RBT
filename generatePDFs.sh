@@ -16,7 +16,18 @@ rm ./pdf/*.pdf
 
 rm *.dot
 
+## only working on my own machine 
+
 /usr/bin/env /Library/Java/JavaVirtualMachines/jdk-11.0.12.jdk/Contents/Home/bin/java -cp /Users/jonathanschlitt/Desktop/Java-RBT/bin Main
+
+## Java commands for compiling and executing
+
+# cd src
+
+# javac *.java
+# java Main
+
+cd ..
 
 ### Generating PDFs from dot files
 for i in *.dot ;do dot -Tpdf ${i%} > ./pdf/${i%.*}.pdf $i;done
