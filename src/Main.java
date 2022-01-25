@@ -1,8 +1,8 @@
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.IntStream;
+// import java.util.concurrent.ThreadLocalRandom;
+// import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -133,41 +133,85 @@ public class Main {
         String result = "";
 
         for (Node n : nodes) {
-            // relations to nodes
-            if (n.left != TNULL && n.right != TNULL) {
-                result += n.key + " -> " + n.left.key + ", " + n.right.key;
-                result += ";\n";
+            // System.out.println(n.left.key);
+
+            if (n.left.key < n.right.key) {
+                // relations to Nil Leafes
+                if (n.left == TNULL && n.right == TNULL) {
+                    // System.out.println(countLeafes);
+                    result += n.key + " -> " + "n" + countLeafes + ", " + "n" + ((int) countLeafes + 1);
+                    // System.out.println(countLeafes);
+                    result += ";\n";
+                    countLeafes += 2;
+                } else {
+                    if (n.left == TNULL) {
+                        result += n.key + " -> " + "n" + countLeafes;
+                        result += ";\n";
+                        countLeafes += 1;
+                    }
+
+                    if (n.right == TNULL) {
+                        result += n.key + " -> " + "n" + countLeafes;
+                        result += ";\n";
+                        countLeafes += 1;
+                    }
+                }
+
+                // relations to nodes
+                if (n.left != TNULL && n.right != TNULL) {
+
+                    result += n.key + " -> " + n.left.key + ", " + n.right.key;
+                    result += ";\n";
+                } else {
+                    if (n.left != TNULL) {
+                        result += n.key + " -> " + n.left.key;
+                        result += ";\n";
+                    }
+
+                    if (n.right != TNULL) {
+                        result += n.key + " -> " + n.right.key;
+                        result += ";\n";
+                    }
+                }
             } else {
-                if (n.left != TNULL) {
-                    result += n.key + " -> " + n.left.key;
+                // relations to nodes
+                if (n.left != TNULL && n.right != TNULL) {
+
+                    result += n.key + " -> " + n.left.key + ", " + n.right.key;
                     result += ";\n";
+                } else {
+                    if (n.left != TNULL) {
+                        result += n.key + " -> " + n.left.key;
+                        result += ";\n";
+                    }
+
+                    if (n.right != TNULL) {
+                        result += n.key + " -> " + n.right.key;
+                        result += ";\n";
+                    }
                 }
 
-                if (n.right != TNULL) {
-                    result += n.key + " -> " + n.right.key;
+                // relations to Nil Leafes
+                if (n.left == TNULL && n.right == TNULL) {
+                    // System.out.println(countLeafes);
+                    result += n.key + " -> " + "n" + countLeafes + ", " + "n" + ((int) countLeafes + 1);
+                    // System.out.println(countLeafes);
                     result += ";\n";
-                }
-            }
+                    countLeafes += 2;
+                } else {
+                    if (n.left == TNULL) {
+                        result += n.key + " -> " + "n" + countLeafes;
+                        result += ";\n";
+                        countLeafes += 1;
+                    }
 
-            // relations to Nil Leafes
-            if (n.left == TNULL && n.right == TNULL) {
-                // System.out.println(countLeafes);
-                result += n.key + " -> " + "n" + countLeafes + ", " + "n" + ((int) countLeafes + 1);
-                // System.out.println(countLeafes);
-                result += ";\n";
-                countLeafes += 2;
-            } else {
-                if (n.left == TNULL) {
-                    result += n.key + " -> " + "n" + countLeafes;
-                    result += ";\n";
-                    countLeafes += 1;
+                    if (n.right == TNULL) {
+                        result += n.key + " -> " + "n" + countLeafes;
+                        result += ";\n";
+                        countLeafes += 1;
+                    }
                 }
 
-                if (n.right == TNULL) {
-                    result += n.key + " -> " + "n" + countLeafes;
-                    result += ";\n";
-                    countLeafes += 1;
-                }
             }
 
         }
@@ -176,11 +220,37 @@ public class Main {
     }
 
     public static int[] generateRandomNumbers() {
+
         // int[] arr = { 22, 1, 5, 9, 36, 4, 88, 73, 99, 96, 100, 49, 67, 55, 17 };
 
-        int[] arr = IntStream.range(0, 15).map(i -> ThreadLocalRandom.current().nextInt(0, 100)).toArray();
+        // int[] arr = { 60, 44, 49, 17, 96, 22, 19, 46, 41, 54, 61, 11, 90, 48, 34 };
 
-        // System.out.println(Arrays.toString(arr));
+        // Random random = new Random();
+
+        // int[] arr = random.ints(15, 1, 100).toArray();
+
+        // int[] arr = IntStream.range(0, 15).map(i ->
+        // ThreadLocalRandom.current().nextInt(0, 100)).toArray();
+
+        int max = 100;
+        int min = 1;
+        int range = max - min + 1;
+
+        int[] arr = new int[15];
+        boolean isSame = false;
+        for (int i = 0; i < 15; i++) {
+            isSame = true;
+            while (isSame == true) {
+                isSame = false;
+                arr[i] = (int) (Math.random() * range) + min;
+                for (int j = 0; j < i; j++) {
+                    if (arr[i] == arr[j]) {
+                        isSame = true;
+                        break;
+                    }
+                }
+            }
+        }
 
         return arr;
     }
