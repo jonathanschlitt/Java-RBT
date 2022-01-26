@@ -1,4 +1,4 @@
-## Red-Black-Tree - Alogorithms and Data Structures - Group <NoStackOverflow>
+## Red-Black-Tree - Alogorithms and Data Structures - Group NoStackOverflow
   
 ## About this project
   
