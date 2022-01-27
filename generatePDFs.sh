@@ -27,7 +27,7 @@ rm *.dot
 # javac *.java
 # java Main
 
-cd ..
+# cd ..
 
 ### Generating PDFs from dot files
 for i in *.dot ;do dot -Tpdf ${i%} > ./pdf/${i%.*}.pdf $i;done
